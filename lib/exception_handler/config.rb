@@ -39,16 +39,6 @@ module ExceptionHandler
       # => Has to be "errors" because "exceptions" is a reserved word
       TABLE = :errors
 
-      # => Social URLs
-      # => Extracted from "social" block
-      SOCIAL = {
-        facebook: "https://facebook.com",
-        twitter:  "https://twitter.com",
-        youtube:  "https://youtube.com/user",
-        linkedin: "https://linkedin.com/company",
-        fusion:   "https://frontlinefusion.com"
-      }
-
     ###########################################
     ###########################################
 
@@ -57,13 +47,9 @@ module ExceptionHandler
       DEFAULTS = {
         dev:    nil, # => defaults to "false" for dev mode
         db:     nil, # => defaults to :errors if true, else use "table_name" / :table_name
-        email: 	nil, # => requires string email and ActionMailer
-        social: {
-          facebook: nil,
-          twitter:  nil,
-          youtube:  nil,
-          linkedin: nil,
-          fusion:   nil,
+        email: 	{
+          to: nil,
+          from: nil
         },
         layouts: {
           # => nil inherits from ApplicationController
@@ -93,7 +79,8 @@ module ExceptionHandler
         end
 
         # => Validation
-        raise ExceptionHandler::Error, "Email Not Valid" if @email && !@email.nil? && !@email.is_a?(String)
+        raise ExceptionHandler::Error, "Email - To Not Valid" if @email && !@email[:to].nil? && !@email[:to].is_a?(String)
+        raise ExceptionHandler::Error, "Email - From Not Valid" if @email && !@email[:from].nil? && !@email[:from].is_a?(String)
         raise ExceptionHandler::Error, "Migration Required → \"#{db}\" doesn't exist" if @db && !ActiveRecord::Base.connection.table_exists?(db) && (File.basename($0) != "rake" && !ARGV.include?("db:migrate"))
 
       end

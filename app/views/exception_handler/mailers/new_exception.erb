@@ -1,4 +1,16 @@
 <h1><%= Rails.application.class.parent_name %> (<%= Rails.env.titleize %>)</h1>
 
 <strong><u><%= @exception.response %> (<%= @exception.status %>)</u></strong>
-<p><%= @exception.message %></p>
+
+<h4 style="margin-bottom: 3px;">Message</h4>
+<%= @exception.message %>
+
+<h4 style="margin-bottom: 3px;">Params</h4>
+<%= @exception.params %>
+
+<h4 style="margin-bottom: 3px;">Trace</h4>
+<dl>
+  <%- @exception.trace.split("\n")[0..8].each do |i| %>
+    <dt><%= i %></dt>
+  <%- end %>
+</dl>

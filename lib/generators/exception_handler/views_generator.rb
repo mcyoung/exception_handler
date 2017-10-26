@@ -6,10 +6,10 @@ module ExceptionHandler
     ###########################################
 
       #Views
-      VIEWS = %w(views controllers models assets)
+      VIEWS = %w(views controllers models)
 
       #Options
-      class_option :files, aliases: "-v", default: VIEWS, type: :array, desc: "Select file types (views, models, controllers, assets)"
+      class_option :files, aliases: "-v", default: VIEWS, type: :array, desc: "Select file types (views, models, controllers)"
 
       #Needed to reference files
       source_root File.expand_path("../../../../app", __FILE__)
