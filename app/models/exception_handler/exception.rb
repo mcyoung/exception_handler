@@ -97,7 +97,7 @@ module ExceptionHandler
         # => Email
         # => after_initialize invoked after .new method called
         # => Should have been after_create but user may not save
-        after_initialize Proc.new { |e| ExceptionHandler::ExceptionMailer.new_exception(e).deliver } if ExceptionHandler.config.try(:email).try(:[], :to).try(:is_a?, String) && ExceptionHandler.config.try(:email).try(:[], :from).try(:is_a?, String)
+        after_initialize Proc.new { |e| ExceptionHandler::ExceptionMailer.new_exception(e).deliver if e.status != 404 } if ExceptionHandler.config.try(:email).try(:[], :to).try(:is_a?, String) && ExceptionHandler.config.try(:email).try(:[], :from).try(:is_a?, String)
 
         # => Attributes
         attr_accessor :request, :klass, :exception, :description
