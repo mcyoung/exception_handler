@@ -28,7 +28,7 @@ module ExceptionHandler
     # => ExceptionHandler.config.social
     # => ExceptionHandler.config.layouts
     # => ExceptionHandler.config.custom_exceptions
-    attr_accessor :dev, :db, :email, :social, :layouts, :custom_exceptions
+    attr_accessor :dev, :db, :email, :social, :layouts, :custom_exceptions, :current_user_method, :current_admin_method
 
     ###########################################
     ###########################################

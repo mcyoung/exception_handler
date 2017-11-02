@@ -10,6 +10,8 @@ module ExceptionHandler
     # => Attributes
     # => Determine schema etc
     ATTRS = %i(class_name status message trace target referrer params user_agent)
+
+    REF_ATTRS = %i(user_id admin_id)
   
     # => Exceptions to be rescued by ExceptionHandler
     EXCEPTIONS_TO_BE_RESCUED = [ActionController::RoutingError, AbstractController::ActionNotFound].tap do |list|
@@ -32,7 +34,7 @@ module ExceptionHandler
         # => Set Attrs
         def initialize attributes={}
             super
-            ATTRS.each do |type|
+            (REF_ATTRS + ATTRS).each do |type|
               self[type] = eval type.to_s
             end
         end
@@ -68,6 +70,8 @@ module ExceptionHandler
 
           # Schema
           ###################
+          # user_id         track the user that had the issue        
+          # admin_id        track the admin that had the issue
           # class_name      @exception.class.name
           # status          ActionDispatch::ExceptionWrapper.new(@request.env, @exception).status_code
           # message         @exception.message
@@ -173,6 +177,22 @@ module ExceptionHandler
           # => User Agent
           def user_agent
             request.user_agent
+          end
+
+          def current_user
+            request.controller_instance.try(ExceptionHandler.config.try(:current_user_method).to_s)
+          end
+
+          def user_id
+            current_user.try(:id)
+          end
+
+          def admin_id
+            current_admin.try(:id)
+          end
+
+          def current_admin
+            request.controller_instance.try(ExceptionHandler.config.try(:current_admin_method).to_s)
           end
 
         ####################################

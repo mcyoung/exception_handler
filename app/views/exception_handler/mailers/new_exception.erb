@@ -2,6 +2,13 @@
 
 <strong><u><%= @exception.response %> (<%= @exception.status %>)</u></strong>
 
+<h4 style="margin-bottom: 3px;">User</h4>
+<%= @exception.user_id || 'n/a' %>
+
+<h4 style="margin-bottom: 3px;">Admin</h4>
+<%= @exception.admin_id || 'n/a' %>
+
+
 <h4 style="margin-bottom: 3px;">Message</h4>
 <%= @exception.message %>
 

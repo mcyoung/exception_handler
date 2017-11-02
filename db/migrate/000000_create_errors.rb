@@ -14,9 +14,14 @@ class CreateErrors < ActiveRecord::Migration[5.0]
     # Up
     def up
       create_table @@table do |t|
+        ExceptionHandler::REF_ATTRS.each do |attr|
+          t.integer attr
+        end
+
         ExceptionHandler::ATTRS.each do |attr|
           t.text attr
         end
+
         t.timestamps
       end
     end
