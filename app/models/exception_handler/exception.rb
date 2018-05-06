@@ -171,7 +171,7 @@ module ExceptionHandler
 
           # => Params
           def params
-            request.params.inspect
+            request.filtered_parameters.inspect
           end
 
           # => User Agent
@@ -187,13 +187,15 @@ module ExceptionHandler
             current_user.try(:id)
           end
 
+          def current_admin
+            request.controller_instance.try(ExceptionHandler.config.try(:current_admin_method).to_s)
+          end
+
           def admin_id
             current_admin.try(:id)
           end
 
-          def current_admin
-            request.controller_instance.try(ExceptionHandler.config.try(:current_admin_method).to_s)
-          end
+          
 
         ####################################
         # Other
