@@ -181,7 +181,7 @@ module ExceptionHandler
           end
 
           def ip_address
-            request.remote_ip if ExceptionHandler.config.try(:track_ip)
+            request.remote_ip if ExceptionHandler.config.try(:ip_address) && ExceptionHandler.config.ip_address[:track]
           end
 
           def current_user

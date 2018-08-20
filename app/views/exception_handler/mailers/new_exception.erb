@@ -2,12 +2,16 @@
 
 <strong><u><%= @exception.response %> (<%= @exception.status %>)</u></strong>
 
+<%- if ExceptionHandler.config.try(:ip_address) && ExceptionHandler.config.ip_address[:include_in_email] %>
+  <h4 style='margin-bottom: 3px;'>IP Address</h4>
+  <%= @exception.ip_address || 'n/a' %>
+<%- end %>
+
 <h4 style="margin-bottom: 3px;">User</h4>
 <%= @exception.user_id || 'n/a' %>
 
 <h4 style="margin-bottom: 3px;">Admin</h4>
 <%= @exception.admin_id || 'n/a' %>
-
 
 <h4 style="margin-bottom: 3px;">Message</h4>
 <%= @exception.message %>
