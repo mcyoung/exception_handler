@@ -28,7 +28,7 @@ module ExceptionHandler
     # => ExceptionHandler.config.social
     # => ExceptionHandler.config.layouts
     # => ExceptionHandler.config.custom_exceptions
-    attr_accessor :dev, :db, :email, :social, :layouts, :custom_exceptions, :current_user_method, :current_admin_method
+    attr_accessor :dev, :db, :track_ip, :email, :social, :layouts, :custom_exceptions, :current_user_method, :current_admin_method
 
     ###########################################
     ###########################################
@@ -47,6 +47,7 @@ module ExceptionHandler
       DEFAULTS = {
         dev:    nil, # => defaults to "false" for dev mode
         db:     nil, # => defaults to :errors if true, else use "table_name" / :table_name
+        track_ip: false,
         email: 	{
           to: nil,
           from: nil

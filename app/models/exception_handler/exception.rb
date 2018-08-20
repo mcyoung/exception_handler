@@ -9,7 +9,7 @@ module ExceptionHandler
 
     # => Attributes
     # => Determine schema etc
-    ATTRS = %i(class_name status message trace target referrer params user_agent)
+    ATTRS = %i(class_name status message trace target referrer params user_agent ip_address)
 
     REF_ATTRS = %i(user_id admin_id)
   
@@ -80,6 +80,7 @@ module ExceptionHandler
           # referer         @request.referer
           # params          @request.params.inspect
           # user_agent      @request.user_agent
+          # ip_address      @request.ip_address
           # created_at
           # updated_at
 
@@ -177,6 +178,10 @@ module ExceptionHandler
           # => User Agent
           def user_agent
             request.user_agent
+          end
+
+          def ip_address
+            request.remote_ip if ExceptionHandler.config.try(:track_ip)
           end
 
           def current_user
