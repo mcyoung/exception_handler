@@ -53,7 +53,10 @@ module ExceptionHandler
         },
         email: 	{
           to: nil,
-          from: nil
+          from: nil,
+          never_codes: [],  # Emails will never be sent, but will be logged to the DB.
+          hourly_digest_codes: [], # Emails will be sent on a delay, collected together (was_emailed).
+          daily_digest_codes: []
         },
         layouts: {
           # => nil inherits from ApplicationController

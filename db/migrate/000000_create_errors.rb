@@ -22,6 +22,9 @@ class CreateErrors < ActiveRecord::Migration[5.0]
           t.text attr
         end
 
+        t.boolean :was_emailed, default: false
+        t.string :email_delivery_cycle, default: 'instant'
+
         t.timestamps
       end
     end
