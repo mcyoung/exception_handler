@@ -1,0 +1,69 @@
+<h1><%= Rails.application.class.parent_name %> (<%= Rails.env.titleize %>)</h1>
+
+<h2><%= "#{@frequency} Breakdown" %></h3>
+
+<%- @grouped_exceptions.each do |grouping, exceptions| %>
+  <h3 style="margin-top: 15px; margin-bottom: 3px;">
+    <span style="color: #555;">Status</span> <%= grouping[0] %>
+    | <span style="color: #555;">IP</span> <%= grouping[1] %>
+    | <span style="color: #555;">Exception</span> <i><%= grouping[2] %></i>
+  </h3>
+
+  <div style="color: #555; font-size: smaller;">
+    <%= pluralize(exceptions.length, 'occurrence') %>
+  </div>
+  
+  <!-- Users -->
+  <h4 style="margin-bottom: 3px;">User(s):</h4>
+  <%- users = exceptions.map(&:user_id)&.uniq&.compact %>
+  <%- if users.length.zero? %>
+    n/a
+  <%- else %>
+    <ul>
+      <%- users.each do |u| %>
+        <li><%= u %></li>
+      <%- end %>
+    </ul>
+  <%- end %>
+  
+  <!-- Admins -->
+  <h4 style="margin-bottom: 3px;">Admin(s):</h4>
+  <%- admins = exceptions.map(&:admin_id)&.uniq&.compact %>
+  <%- if admins.length.zero? %>
+    n/a
+  <%- else %>
+    <ul>
+      <%- admins.each do |a| %>
+        <li><%= a %></li>
+      <%- end %>
+    </ul>
+  <%- end %>
+
+  <!-- Messages -->
+  <h4 style="margin-bottom: 3px;">Message(s)</h4>
+  <%- messages = exceptions.map(&:message)&.uniq&.compact %>
+  <%- if messages.length.zero? %>
+    n/a
+  <%- else %>
+    <ul>
+      <%- messages.each do |i| %>
+        <li><%= i %></li>
+      <%- end %>
+    </ul>
+  <%- end %>
+
+  <!-- Params -->
+  <h4 style="margin-bottom: 3px;">Params</h4>
+  <%- param_set = exceptions.map(&:params)&.uniq&.compact %>
+  <%- if param_set.length.zero? %>
+    n/a
+  <%- else %>
+    <ul>
+      <%- param_set.each do |i| %>
+        <li><%= i %></li>
+      <%- end %>
+    </ul>
+  <%- end %>
+  
+  <hr />
+<%- end %>
