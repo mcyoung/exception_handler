@@ -39,6 +39,19 @@
     </ul>
   <%- end %>
 
+  <!-- User Agents -->
+  <h4 style="margin-bottom: 3px;">User Agent(s):</h4>
+  <%- user_agents = exceptions.map(&:user_agent)&.uniq&.compact %>
+  <%- if user_agents.length.zero? %>
+    n/a
+  <%- else %>
+    <ul>
+      <%- user_agents.each do |a| %>
+        <li><%= a %></li>
+      <%- end %>
+    </ul>
+  <%- end %>
+
   <!-- Messages -->
   <h4 style="margin-bottom: 3px;">Message(s)</h4>
   <%- messages = exceptions.map(&:message)&.uniq&.compact %>
