@@ -24,7 +24,9 @@ module ExceptionHandler
 
     BOTS = %w(Baidu Gigabot Googlebot libwww-per lwp-trivial msnbot SiteUptime Slurp Wordpress ZIBB ZyBorg Yandex Jyxobot Huaweisymantecspider ApptusBot).freeze
 
-    ATTRS = %i(class_name status message trace target referer params user_agent ip_address email_delivery_cycle).freeze
+    ATTRS = %i(class_name status message trace target referer params user_agent browser ip_address email_delivery_cycle).freeze
+
+    BOOL_ATTRS = %i(bot_likely).freeze
 
     REF_ATTRS = %i(user_id admin_id).freeze
   
@@ -37,7 +39,7 @@ module ExceptionHandler
     after_initialize :set_attributes, unless: ->{ self.persisted? }
 
     def set_attributes
-      (REF_ATTRS + ATTRS).each {|type| self[type] = self.public_send("set_#{type.to_s}") }
+      (REF_ATTRS + BOOL_ATTRS + ATTRS).each {|type| self[type] = self.public_send("set_#{type.to_s}") }
     end
 
     
@@ -134,6 +136,22 @@ module ExceptionHandler
     # => User Agent
     def set_user_agent
       request.user_agent
+    end
+
+    def set_browser
+      begin
+        Browser.new(request.user_agent).name
+      rescue
+        '-- Browser Gem Not Available --'
+      end
+    end
+
+    def set_bot_likely
+      begin
+        Browser.new(request.user_agent).bot?
+      rescue
+        false
+      end
     end
 
     def set_ip_address
