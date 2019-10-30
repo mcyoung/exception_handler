@@ -1,6 +1,6 @@
 <h1><%= Rails.application.class.parent_name %> (<%= Rails.env.titleize %>)</h1>
 
-<h2><%= "#{@frequency} Breakdown" %></h3>
+<h2><%= "#{@frequency} Breakdown" %></h2>
 
 <%- @grouped_exceptions.each do |grouping, exceptions| %>
   <h3 style="margin-top: 15px; margin-bottom: 3px;">

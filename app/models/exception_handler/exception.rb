@@ -217,7 +217,7 @@ module ExceptionHandler
 
       return if error_list.length.zero?
 
-      errors_to_alert = error_list.group_by{|e| [e[:status], e[:ip_address], e[:class_name]] }
+      errors_to_alert = error_list.group_by{|e| [e[:status], e[:class_name], e[:message]] }
 
       ExceptionHandler::ExceptionMailer.collection_email(cycle, errors_to_alert).deliver
 
